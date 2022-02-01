@@ -3,22 +3,22 @@
 
 - name: Install formula with 'brew' from cask
   community.general.homebrew:
-    name: homebrew/cask/"{{ item }}"
+    name: "{{ item }}"
     state: present
     update_homebrew: yes
   with_items:
-    - authy
-    - google-chrome
-    - firefox
-    - nordvpn
-    - nordpass
-    - tunnelblick
-    - visual-studio-code
-    - sublime-text
-    - libreoffice
-    - spotify
-    - discord
-    - microsoft-teams
+    - homebrew/cask/authy
+    - homebrew/cask/google-chrome
+    - homebrew/cask/firefox
+    - homebrew/cask/nordvpn
+    - homebrew/cask/nordpass
+    - homebrew/cask/tunnelblick
+    - homebrew/cask/visual-studio-code
+    - homebrew/cask/sublime-text
+    - homebrew/cask/libreoffice
+    - homebrew/cask/spotify
+    - homebrew/cask/discord
+    - homebrew/cask/microsoft-teams
 
 - name: Install formula with 'brew' no casks
   community.general.homebrew:
