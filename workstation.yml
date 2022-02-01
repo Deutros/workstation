@@ -1,0 +1,6 @@
+---
+  - name: "Starting role workstation"
+    hosts: localhost
+    connection: local 
+    roles:
+      - workstation

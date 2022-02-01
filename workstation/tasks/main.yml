@@ -1,0 +1,11 @@
+---
+# tasks file for workstations
+
+- include: install_Windows.yml
+  when: ansible_facts['distribution'] == "windows"
+
+- include: install_Mac.yml
+  when: ansible_facts['distribution'] == "mac"
+
+- include: install_Mojave.yml
+  when: ansible_facts['distribution'] == "mojave"

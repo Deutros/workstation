@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Installs my workstations
+A brief description of the role goes here.
 
 Requirements
 ------------
@@ -11,17 +11,7 @@ Any pre-requisites that may not be covered by Ansible itself or the role should 
 Role Variables
 --------------
 
-A description of the settable variables.
-```
-- include: install_Windows.yml
-  when: ansible_facts['distribution'] == "windows"
-
-- include: install_Mac.yml
-  when: ansible_facts['distribution'] == "mac"
-
-- include: install_Mojave.yml
-  when: ansible_facts['distribution'] == "mojave"
-```
+A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
 Dependencies
 ------------

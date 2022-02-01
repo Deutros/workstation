@@ -1,0 +1,73 @@
+---
+# This will install all applications and settings for Mac
+
+#shell
+- name: Make ready the Brew tooling
+  ansible.builtin.shell:
+  with_items:
+    - '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)'
+
+
+- name: Install formula with 'brew' from cask
+  community.general.homebrew:
+    name: homebrew/cask/"{{ item }}"
+    state: present
+    update_homebrew: yes
+  with_items:
+    - authy
+    - google-chrome
+    - firefox
+    - nordvpn
+    - nordpass
+    - tunnelblick
+    - visual-studio-code
+    - sublime-text
+    - libreoffice
+    - spotify
+    - discord
+    - microsoft-teams
+
+- name: Install formula with 'brew' no casks
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+    update_homebrew: yes
+  with_items:
+    - go
+    - terraform
+    - loginitems #This allows for command line to add startup tools
+
+- name: Download Stack
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{ item.dest }}"
+    mode: '0440'
+  loop:
+  - { url: 'https://mirror.transip.net/stack/software/stack-macos-latest.dmg', dest: '~/Downloads/stack.md' }
+
+- name: Install Stack
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
+    - hdiutil attach ~/Downloads/stack.dmg -nobrowse -mountpoint ~/Downloads/stack
+    - cp -aR ~/Downloads/stack/*.app /Applications/stack.app
+    - hdiutil detach ~/Downloads/stack/
+    - loginitems -a stack
+
+- name: Setup bash profile and exports
+  blockinfile:
+    path: ~/.bash_profile
+    block: |
+      alias ll="ls -l"
+
+
+- name: Create symbolic links
+  ansible.builtin.file:
+    src: ~/stack/workspace
+    dest: ~/workspace
+    owner: "{{ macuser }}"
+    group: "{{ macuser }}"
+    state: link
+
+# TODO
+#Configuration
+# - Pretty Shell
