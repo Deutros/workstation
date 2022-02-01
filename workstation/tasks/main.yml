@@ -1,11 +1,19 @@
 ---
 # tasks file for workstations
+- name: What OS are we attempting to configure.
+  ansible.builtin.debug:
+    var: os
 
-- include: install_Windows.yml
-  when: ansible_facts['distribution'] == "windows"
+- name: What User are we using.
+  ansible.builtin.debug:
+    var: user
+    
+- import_tasks: install_Windows.yml
+  when: os == "windows"
 
-- include: install_Mac.yml
-  when: ansible_facts['distribution'] == "mac"
+- import_tasks: install_Mac.yml
+  when: os == "mac"
 
-- include: install_Mojave.yml
-  when: ansible_facts['distribution'] == "mojave"
+- import_tasks: install_Mojave.yml
+  when: os == "mojave"
+    

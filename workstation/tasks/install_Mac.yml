@@ -1,13 +1,6 @@
 ---
 # This will install all applications and settings for Mac
 
-#shell
-- name: Make ready the Brew tooling
-  ansible.builtin.shell:
-  with_items:
-    - '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)'
-
-
 - name: Install formula with 'brew' from cask
   community.general.homebrew:
     name: homebrew/cask/"{{ item }}"

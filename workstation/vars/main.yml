@@ -1,4 +1,4 @@
 ---
 # vars file for workspace
-macuser: "$USER"
-linuxuser: "$USER"
+user: "$USER"
+os: "input"
