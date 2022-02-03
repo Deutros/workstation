@@ -7,4 +7,4 @@ chsh -s /bin/bash
 #echo "export PATH=\$PATH:/Users/$USER/Library/Python/3.8/bin/" >> ~/.bash_profile
 
 ansible-galaxy collection install community.general
-ansible-playbook workstation.yml --extra-vars "os=mac user=$USER" --ask-become-pass
+ansible-playbook workstation.yml --extra-vars "os=mac user=$USER"
