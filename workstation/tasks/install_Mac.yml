@@ -19,6 +19,8 @@
     - homebrew/cask/spotify
     - homebrew/cask/discord
     - homebrew/cask/microsoft-teams
+  register: brew_result
+  failed_when: "'FAILED' in brew_result.stderr"
 
 - name: Install formula with 'brew' no casks
   community.general.homebrew:
@@ -29,6 +31,8 @@
     - go
     - terraform
     - loginitems #This allows for command line to add startup tools
+  register: brew_result
+  failed_when: "'FAILED' in brew_result.stderr"
 
 - name: Download Stack
   get_url:
