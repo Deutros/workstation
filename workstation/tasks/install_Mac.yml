@@ -49,7 +49,6 @@
   with_items:
     - go
     - terraform
-    - loginitems #This allows for command line to add startup tools
   register: result
   until: result is successful
   when: homebrew_check.stat.exists
