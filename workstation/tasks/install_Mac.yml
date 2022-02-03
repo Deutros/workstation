@@ -68,7 +68,7 @@
 - name: Install Stack
   ansible.builtin.shell: "{{ item }}"
   with_items:
-    - wget https://mirror.transip.net/stack/software/stack-macos-latest.dmg -P ~/Downloads/stack-macos-latest.dmg
+    - wget https://mirror.transip.net/stack/software/stack-macos-latest.dmg -P ~/Downloads/
     - hdiutil attach ~/Downloads/stack-macos-latest.dmg -nobrowse -mountpoint ~/stack
     - cp -aR ~/stack/*.app /Applications/stack.app
     - hdiutil detach ~/Downloads/stack/
