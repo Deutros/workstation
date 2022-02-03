@@ -59,12 +59,12 @@
     dest: "{ item.dest }}"
     mode: '0440'
   loop:
-  - { url: 'https://mirror.transip.net/stack/software/stack-macos-latest.dmg', dest: '~/Downloads/stack.dmg' }
+  - { url: 'https://mirror.transip.net/stack/software/stack-macos-latest.dmg', dest: '~/Downloads/' }
 
 - name: Install Stack
   ansible.builtin.shell: "{{ item }}"
   with_items:
-    - hdiutil attach ~/Downloads/stack.dmg -nobrowse -mountpoint ~/Downloads/stack
+    - hdiutil attach ~/Downloads/stack-macos-latest.dmg -nobrowse -mountpoint ~/Downloads/stack
     - cp -aR ~/Downloads/stack/*.app /Applications/stack.app
     - hdiutil detach ~/Downloads/stack/
 
