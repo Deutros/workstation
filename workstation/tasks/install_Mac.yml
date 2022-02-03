@@ -20,7 +20,7 @@
     - install_homebrew_if_missing
 
 - name: Install formula with 'brew' from cask
-  community.general.homebrew:
+  community.general.homebrew_cask:
     name: "{{ item }}"
     state: present
     update_homebrew: yes
