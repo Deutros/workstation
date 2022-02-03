@@ -37,6 +37,7 @@
     - homebrew/cask/spotify
     - homebrew/cask/discord
     - homebrew/cask/microsoft-teams
+    - homebrew/cask/iterm2
   register: result
   until: result is successful
   when: homebrew_check.stat.exists
@@ -48,6 +49,7 @@
     update_homebrew: yes
   with_items:
     - go
+    - zsh
     - terraform
     - wget
     - nmap
@@ -79,10 +81,16 @@
   when:
     - not stack_check.stat.exists
 
-- name: Install Stack
+- name: Startup Stack
   ansible.builtin.shell: "{{ item }}"
   with_items:
     - loginitems -a stack
+
+- name: Install Oh My ZSH
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
+    - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    - chsh -s /usr/local/bin/zsh
 
 - name: Setup bash profile and exports
   blockinfile:
@@ -90,30 +98,3 @@
     block: |
       alias ll="ls -l"
       export PATH=/Users/$USER/Library/Python/3.8/bin/:$PATH
-
-
-# - name: Create symbolic links
-#   ansible.builtin.file:
-#     src: ~/stack/workspace
-#     dest: ~/workspace
-#     owner: "{{ user }}"
-#     group: "{{ user }}"
-#     state: link
-
-- name: Get current Terminal profile.
-  shell: defaults read com.apple.Terminal 'Default Window Settings'
-  register: terminal_theme
-  changed_when: false
- 
-- name: Ensure custom Terminal profile is added.
-  shell: open ./workstation/files/monokai.terminal
-  changed_when: false
-  when: "'monokai' not in terminal_theme.stdout"
- 
-- name: Ensure custom Terminal profile is set as default.
-  shell: "{{ item }}"
-  with_items:
-    - defaults write com.apple.Terminal 'Default Window Settings' -string 'monokai'
-    - defaults write com.apple.Terminal 'Startup Window Settings' -string 'monokai'
-  changed_when: false
-  when: "'monokai ansi' not in terminal_theme.stdout"
