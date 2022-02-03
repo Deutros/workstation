@@ -68,7 +68,7 @@
   with_items:
     - wget https://mirror.transip.net/stack/software/stack-macos-latest.dmg -P ~/Downloads/
     - hdiutil attach ~/Downloads/stack-macos-latest.dmg -nobrowse -mountpoint ~/stack
-    - cp -aR ~/stack/*.app /Applications/stack.app
+    - cp -afR ~/stack/*.app /Applications/stack.app
     - hdiutil detach ~/stack
     - loginitems -a stack
 
