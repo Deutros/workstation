@@ -59,8 +59,8 @@
   ansible.builtin.shell: "{{ item }}"
   with_items:
     - wget https://github.com/OJFord/loginitems/archive/refs/heads/master.zip -P ~/Downloads/
-    - unzip ~/Downloads/master.zip
-    - chmod +x ~/Downloads/loginitems-master/*
+    - unzip ~/Downloads/master.zip -d ~/Downloads/loginitems
+    - chmod +x ~/Downloads/loginitems/*
     - export PATH=\$PATH:/Users/$USER/Downloads/loginitems-master/ 
 
 - name: Install Stack
@@ -80,13 +80,13 @@
       export PATH=\$PATH:/Users/$USER/Library/Python/3.8/bin/
 
 
-- name: Create symbolic links
-  ansible.builtin.file:
-    src: ~/stack/workspace
-    dest: ~/workspace
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    state: link
+# - name: Create symbolic links
+#   ansible.builtin.file:
+#     src: ~/stack/workspace
+#     dest: ~/workspace
+#     owner: "{{ user }}"
+#     group: "{{ user }}"
+#     state: link
 
 # TODO
 #Configuration
