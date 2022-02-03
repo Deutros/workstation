@@ -1,5 +1,5 @@
 #/bin/bash
-chsh -s /bin/bash
+#chsh -s /bin/bash
 
 #/Library/Developer/CommandLineTools/usr/bin/python3 -m pip install --upgrade pip
 #pip3 install ansible
