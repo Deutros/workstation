@@ -89,7 +89,7 @@
     path: ~/.bash_profile
     block: |
       alias ll="ls -l"
-      export PATH=\$PATH:/Users/$USER/Library/Python/3.8/bin/
+      export PATH=/Users/$USER/Library/Python/3.8/bin/:$PATH
 
 
 # - name: Create symbolic links
