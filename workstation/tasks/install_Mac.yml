@@ -39,7 +39,7 @@
     - homebrew/cask/microsoft-teams
   register: result
   until: result is successful
-  failed_when: homebrew_check.stat.exists
+  when: homebrew_check.stat.exists
 
 - name: Install formula with 'brew' no casks
   community.general.homebrew:
@@ -52,7 +52,7 @@
     - loginitems #This allows for command line to add startup tools
   register: result
   until: result is successful
-  failed_when: homebrew_check.stat.exists
+  when: homebrew_check.stat.exists
 
 - name: Download Stack
   get_url:
