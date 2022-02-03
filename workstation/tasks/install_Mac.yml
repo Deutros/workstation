@@ -106,14 +106,14 @@
   changed_when: false
  
 - name: Ensure custom Terminal profile is added.
-  shell: open ./workstation/files/solarized-dark.terminal
+  shell: open ./workstation/files/monokai.terminal
   changed_when: false
-  when: "'Solarized-Dark' not in terminal_theme.stdout"
+  when: "'monokai' not in terminal_theme.stdout"
  
 - name: Ensure custom Terminal profile is set as default.
   shell: "{{ item }}"
   with_items:
-    - defaults write com.apple.Terminal 'Default Window Settings' -string 'Solarized-Dark'
-    - defaults write com.apple.Terminal 'Startup Window Settings' -string 'Solarized-Dark'
+    - defaults write com.apple.Terminal 'Default Window Settings' -string 'monokai'
+    - defaults write com.apple.Terminal 'Startup Window Settings' -string 'monokai'
   changed_when: false
-  when: "'Solarized Dark ansi' not in terminal_theme.stdout"
+  when: "'monokai ansi' not in terminal_theme.stdout"
