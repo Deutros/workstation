@@ -61,7 +61,7 @@
     - wget https://github.com/OJFord/loginitems/archive/refs/heads/master.zip -P ~/Downloads/
     - unzip -o ~/Downloads/master.zip -d ~/Downloads/loginitems
     - chmod +x ~/Downloads/loginitems/*
-    - export PATH=\$PATH:/Users/$USER/Downloads/loginitems-master/ 
+    - mv ~/Downloads/loginitems/loginitems* /usr/local/bin/.
 
 - name: Install Stack
   ansible.builtin.shell: "{{ item }}"
