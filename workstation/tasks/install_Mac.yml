@@ -58,8 +58,8 @@
     url: "{{ item.url }}"
     dest: "{ item.dest }}"
     mode: '0440'
-    owner: "{{ macuser }}"
-    group: "{{ macuser }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
   loop:
   - { url: 'https://mirror.transip.net/stack/software/stack-macos-latest.dmg', dest: '~/Downloads' }
 
@@ -88,8 +88,8 @@
   ansible.builtin.file:
     src: ~/stack/workspace
     dest: ~/workspace
-    owner: "{{ macuser }}"
-    group: "{{ macuser }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
     state: link
 
 # TODO
