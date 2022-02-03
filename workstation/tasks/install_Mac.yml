@@ -68,13 +68,19 @@
     - hdiutil attach ~/Downloads/stack.dmg -nobrowse -mountpoint ~/Downloads/stack
     - cp -aR ~/Downloads/stack/*.app /Applications/stack.app
     - hdiutil detach ~/Downloads/stack/
-    - loginitems -a stack
+
+- name: Make sure Stack is booted on start
+  community.general.launchd:
+    name: com.stack
+    state: started
+    enabled: yes
 
 - name: Setup bash profile and exports
   blockinfile:
     path: ~/.bash_profile
     block: |
       alias ll="ls -l"
+      export PATH=\$PATH:/Users/$USER/Library/Python/3.8/bin/
 
 
 - name: Create symbolic links
