@@ -63,6 +63,11 @@
     - chmod +x ~/Downloads/loginitems/*
     - mv ~/Downloads/loginitems/loginitems* /usr/local/bin/.
 
+- name: Checking if Stack is Installed
+  stat:
+    path: /Applications/stack.app
+  register: stack_check
+
 - name: Install Stack
   ansible.builtin.shell: "{{ item }}"
   with_items:
@@ -70,6 +75,12 @@
     - hdiutil attach ~/Downloads/stack-macos-latest.dmg -nobrowse -mountpoint ~/stack
     - cp -afR ~/stack/*.app /Applications/stack.app
     - hdiutil detach ~/stack
+  when:
+    - not stack_check.stat.exists
+
+- name: Install Stack
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
     - loginitems -a stack
 
 - name: Setup bash profile and exports
