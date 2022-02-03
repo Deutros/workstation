@@ -55,23 +55,13 @@
   until: result is successful
   when: homebrew_check.stat.exists
 
-# - name: Download Stack
-#   get_url:
-#     url: "{{ item.url }}"
-#     dest: "{ item.dest }}"
-#     mode: '0440'
-#     owner: "{{ user }}"
-#     group: "{{ user }}"
-#   loop:
-#   - { url: https://mirror.transip.net/stack/software/stack-macos-latest.dmg, dest: /tmp }
-
 - name: Install Stack
   ansible.builtin.shell: "{{ item }}"
   with_items:
     - wget https://mirror.transip.net/stack/software/stack-macos-latest.dmg -P ~/Downloads/
     - hdiutil attach ~/Downloads/stack-macos-latest.dmg -nobrowse -mountpoint ~/stack
     - cp -aR ~/stack/*.app /Applications/stack.app
-    - hdiutil detach ~/Downloads/stack/
+    - hdiutil detach ~/stack
 
 - name: Make sure Stack is booted on start
   community.general.launchd:
