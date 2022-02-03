@@ -58,8 +58,10 @@
     url: "{{ item.url }}"
     dest: "{ item.dest }}"
     mode: '0440'
+    owner: "{{ macuser }}"
+    group: "{{ macuser }}"
   loop:
-  - { url: 'https://mirror.transip.net/stack/software/stack-macos-latest.dmg', dest: '~/Downloads/' }
+  - { url: 'https://mirror.transip.net/stack/software/stack-macos-latest.dmg', dest: '~/Downloads' }
 
 - name: Install Stack
   ansible.builtin.shell: "{{ item }}"
