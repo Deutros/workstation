@@ -55,6 +55,7 @@
   until: result is successful
   when: homebrew_check.stat.exists
 
+# From https://github.com/OJFord/loginitems
 - name: Install loginitems
   ansible.builtin.shell: "{{ item }}"
   with_items:
@@ -99,6 +100,20 @@
 #     group: "{{ user }}"
 #     state: link
 
-# TODO
-#Configuration
-# - Pretty Shell
+- name: Get current Terminal profile.
+  shell: defaults read com.apple.Terminal 'Default Window Settings'
+  register: terminal_theme
+  changed_when: false
+ 
+- name: Ensure custom Terminal profile is added.
+  shell: open files/solarized-dark.terminal
+  changed_when: false
+  when: "'Solarized-Dark' not in terminal_theme.stdout"
+ 
+- name: Ensure custom Terminal profile is set as default.
+  shell: "{{ item }}"
+  with_items:
+    - defaults write com.apple.Terminal 'Default Window Settings' -string 'Solarized-Dark'
+    - defaults write com.apple.Terminal 'Startup Window Settings' -string 'Solarized-Dark'
+  changed_when: false
+  when: "'Solarized Dark ansi' not in terminal_theme.stdout"
