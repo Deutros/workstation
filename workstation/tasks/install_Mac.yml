@@ -49,25 +49,28 @@
   with_items:
     - go
     - terraform
+    - wget
+    - nmap
   register: result
   until: result is successful
   when: homebrew_check.stat.exists
 
-- name: Download Stack
-  get_url:
-    url: "{{ item.url }}"
-    dest: "{ item.dest }}"
-    mode: '0440'
-    owner: "{{ user }}"
-    group: "{{ user }}"
-  loop:
-  - { url: https://mirror.transip.net/stack/software/stack-macos-latest.dmg, dest: /tmp }
+# - name: Download Stack
+#   get_url:
+#     url: "{{ item.url }}"
+#     dest: "{ item.dest }}"
+#     mode: '0440'
+#     owner: "{{ user }}"
+#     group: "{{ user }}"
+#   loop:
+#   - { url: https://mirror.transip.net/stack/software/stack-macos-latest.dmg, dest: /tmp }
 
 - name: Install Stack
   ansible.builtin.shell: "{{ item }}"
   with_items:
-    - hdiutil attach /tmp/stack-macos-latest.dmg -nobrowse -mountpoint /Users/{{ user }}/stack
-    - cp -aR ~/Downloads/stack/*.app /Applications/stack.app
+    - wget https://mirror.transip.net/stack/software/stack-macos-latest.dmg -P ~/Downloads/stack-macos-latest.dmg
+    - hdiutil attach ~/Downloads/stack-macos-latest.dmg -nobrowse -mountpoint ~/stack
+    - cp -aR ~/stack/*.app /Applications/stack.app
     - hdiutil detach ~/Downloads/stack/
 
 - name: Make sure Stack is booted on start
