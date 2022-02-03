@@ -106,7 +106,7 @@
   changed_when: false
  
 - name: Ensure custom Terminal profile is added.
-  shell: open files/solarized-dark.terminal
+  shell: open ./files/solarized-dark.terminal
   changed_when: false
   when: "'Solarized-Dark' not in terminal_theme.stdout"
  
