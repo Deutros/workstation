@@ -59,7 +59,7 @@
   ansible.builtin.shell: "{{ item }}"
   with_items:
     - wget https://github.com/OJFord/loginitems/archive/refs/heads/master.zip -P ~/Downloads/
-    - unzip ~/Downloads/master.zip -d ~/Downloads/loginitems
+    - unzip -o ~/Downloads/master.zip -d ~/Downloads/loginitems
     - chmod +x ~/Downloads/loginitems/*
     - export PATH=\$PATH:/Users/$USER/Downloads/loginitems-master/ 
 
