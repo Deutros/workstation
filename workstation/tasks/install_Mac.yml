@@ -60,8 +60,8 @@
   with_items:
     - wget https://github.com/OJFord/loginitems/archive/refs/heads/master.zip -P ~/Downloads/
     - unzip -o ~/Downloads/master.zip -d ~/Downloads/loginitems
-    - chmod +x ~/Downloads/loginitems/*
-    - mv ~/Downloads/loginitems/loginitems* /usr/local/bin/.
+    - chmod +x ~/Downloads/loginitems/loginitems-master/*
+    - mv ~/Downloads/loginitems/loginitems-master/loginitems* /usr/local/bin/.
 
 - name: Checking if Stack is Installed
   stat:
