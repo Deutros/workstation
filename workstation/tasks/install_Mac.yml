@@ -91,6 +91,10 @@
     path: /User/{{ user }}/.oh-my-zsh/oh-my-zsh.sh
   register: ohmyzsh_check
 
+- name: print ohmyzsh var
+  ansible.builtin.debug:
+    msg: "{{ ohmyzsh_check }}"
+
 - name: Install Oh My ZSH
   ansible.builtin.shell: "{{ item }}"
   with_items:
