@@ -92,6 +92,31 @@
     - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     - chsh -s /usr/local/bin/zsh
 
+- name: Get Fura Mono Regular Nerd Font
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
+    - wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete.otf -P ~/Downloads/
+    - mv ~/Downloads/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf  ~/Library/Fonts/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf 
+
+- name: Download Plugins
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
+    - 
+    - 
+
+# git clone https://github.com/romkatv/powerlevel10k.git 
+# $ZSH_CUSTOM/themes/powerlevel10k
+# git clone https://github.com/zsh-users/zsh-autosuggestions.git 
+# $ZSH_CUSTOM/plugins/zsh-autosuggestions
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git 
+# $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+
+# .zshrc
+# ZSH_THEME="powerlevel10k/powerlevel10k"
+# POWERLEVEL9K_MODE="nerdfont-complete"
+# ENABLE_CORRECTION="true"
+# plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+
 - name: Setup bash profile and exports
   blockinfile:
     path: ~/.bash_profile
