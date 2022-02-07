@@ -119,6 +119,11 @@
 #     - wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete.otf -P ~/Downloads/
 #     - mv ~/Downloads/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf  ~/Library/Fonts/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf 
 
+- name: Creates zsh plugin dir
+  file:
+    path: '/Users/{{ user }}/zshplugins
+    state: directory
+
 # git clone https://github.com/romkatv/powerlevel10k.git 
 # $ZSH_CUSTOM/themes/powerlevel10k
 # git clone https://github.com/zsh-users/zsh-autosuggestions.git 
@@ -129,6 +134,7 @@
   ansible.builtin.git: 
     repo: "{{ item.git }}"
     dest: "{{ item.dir }}"
+    separate_git_dir: /src/ansible-examples.git
   with_items:
     - { git: https://github.com/romkatv/powerlevel10k.git,              dir: '/Users/{{ user }}/zshplugins/powerles10k' }
     - { git: https://github.com/zsh-users/zsh-autosuggestions.git,      dir: '/Users/{{ user }}/zshplugins/autosuggestions' }
