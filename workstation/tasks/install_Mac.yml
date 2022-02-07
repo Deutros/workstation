@@ -136,9 +136,9 @@
     dest: "{{ item.dir }}"
     separate_git_dir: /src/ansible-examples.git
   with_items:
-    - { git: https://github.com/romkatv/powerlevel10k.git,              dir: '/Users/{{ user }}/zshplugins/powerles10k' }
-    - { git: https://github.com/zsh-users/zsh-autosuggestions.git,      dir: '/Users/{{ user }}/zshplugins/autosuggestions' }
-    - { git: https://github.com/zsh-users/zsh-syntax-highlighting.git,  dir: '/Users/{{ user }}/zshplugins/highlighting' }
+    - { git: https://github.com/romkatv/powerlevel10k.git,              dir: '/Users/{{ user }}/zshplugins' }
+    - { git: https://github.com/zsh-users/zsh-autosuggestions.git,      dir: '/Users/{{ user }}/zshplugins' }
+    - { git: https://github.com/zsh-users/zsh-syntax-highlighting.git,  dir: '/Users/{{ user }}/zshplugins' }
 
 - name: Set Variables for terminal
   ansible.builtin.shell: "{{ item }}"
