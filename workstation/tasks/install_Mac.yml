@@ -86,38 +86,38 @@
 #   with_items:
 #     - loginitems -a stack
 
-- name: Checking if oh my zsh is Installed
-  stat:
-    path: /Users/{{ user }}/.oh-my-zsh/oh-my-zsh.sh
-  register: ohmyzsh_check
+# - name: Checking if oh my zsh is Installed
+#   stat:
+#     path: /Users/{{ user }}/.oh-my-zsh/oh-my-zsh.sh
+#   register: ohmyzsh_check
 
-- name: print ohmyzsh var
-  ansible.builtin.debug:
-    msg: "{{ ohmyzsh_check }}"
+# - name: print ohmyzsh var
+#   ansible.builtin.debug:
+#     msg: "{{ ohmyzsh_check }}"
 
-- name: Install Oh My ZSH
-  ansible.builtin.shell: "{{ item }}"
-  with_items:
-    - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  when:
-    - not ohmyzsh_check.stat.exists
+# - name: Install Oh My ZSH
+#   ansible.builtin.shell: "{{ item }}"
+#   with_items:
+#     - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#   when:
+#     - not ohmyzsh_check.stat.exists
 
-- name: add brew ZSH shell to file so we can change to it.
-  ansible.builtin.lineinfile:
-    path:       /etc/shells
-    line:       '/usr/local/bin/zsh'
-  become:       true
+# - name: add brew ZSH shell to file so we can change to it.
+#   ansible.builtin.lineinfile:
+#     path:       /etc/shells
+#     line:       '/usr/local/bin/zsh'
+#   become:       true
 
-- name: Make zsh standard shell
-  ansible.builtin.shell: "{{ item }}"
-  with_items:
-    - chsh -s /usr/local/bin/zsh
+# - name: Make zsh standard shell
+#   ansible.builtin.shell: "{{ item }}"
+#   with_items:
+#     - chsh -s /usr/local/bin/zsh
 
-- name: Get Fura Mono Regular Nerd Font
-  ansible.builtin.shell: "{{ item }}"
-  with_items:
-    - wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete.otf -P ~/Downloads/
-    - mv ~/Downloads/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf  ~/Library/Fonts/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf 
+# - name: Get Fura Mono Regular Nerd Font
+#   ansible.builtin.shell: "{{ item }}"
+#   with_items:
+#     - wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete.otf -P ~/Downloads/
+#     - mv ~/Downloads/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf  ~/Library/Fonts/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf 
 
 # git clone https://github.com/romkatv/powerlevel10k.git 
 # $ZSH_CUSTOM/themes/powerlevel10k
@@ -127,12 +127,12 @@
 # $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 - name: Download Plugins
   ansible.builtin.git: 
-    repo: "{{ item }}"
-    dest: ~/
+    repo: "{{ item.git }}"
+    dest: "{{ item.dir }}"
   with_items:
-    - https://github.com/romkatv/powerlevel10k.git 
-    - https://github.com/zsh-users/zsh-autosuggestions.git
-    - https://github.com/zsh-users/zsh-syntax-highlighting.git
+    - { git: https://github.com/romkatv/powerlevel10k.git,              dir: '/Users/{{ user }}/zshplugins/powerles10k' }
+    - { git: https://github.com/zsh-users/zsh-autosuggestions.git,      dir: '/Users/{{ user }}/zshplugins/autosuggestions' }
+    - { git: https://github.com/zsh-users/zsh-syntax-highlighting.git,  dir: '/Users/{{ user }}/zshplugins/highlighting' }
 
 - name: Set Variables for terminal
   ansible.builtin.shell: "{{ item }}"
