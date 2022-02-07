@@ -102,10 +102,21 @@
   when:
     - not ohmyzsh_check.stat.exists
 
+- name: "Ensure /tmp/my.conf contains '127.0.0.1'"
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: "/usr/local/bin/zsh"
+    state: present
+  check_mode: yes
+  register: zsh_check
+
 - name: add brew ZSH shell to file so we can change to it.
   ansible.builtin.lineinfile:
     path:       /etc/shells
     line:       '/usr/local/bin/zsh'
+  become:       true
+  when:
+    - not zsh_check.stat.exists
 
 - name: Make zsh standard shell
   ansible.builtin.shell: "{{ item }}"
