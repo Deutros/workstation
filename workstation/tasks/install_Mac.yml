@@ -86,10 +86,21 @@
   with_items:
     - loginitems -a stack
 
+- name: Checking if oh my zsh is Installed
+  stat:
+    path: /User/{{ user }}/.oh-my-zsh
+  register: ohmyzsh_check
+
 - name: Install Oh My ZSH
   ansible.builtin.shell: "{{ item }}"
   with_items:
     - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  when:
+    - not ohmyzsh_check.stat.exists
+
+- name: Make zsh standard shell
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
     - chsh -s /usr/local/bin/zsh
 
 - name: Get Fura Mono Regular Nerd Font
