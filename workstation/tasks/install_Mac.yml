@@ -59,7 +59,7 @@
 
 - name: Creates directory for terminal files
   ansible.builtin.file:
-    path: /home/{{ user }}/termfiles
+    path: /User/{{ user }}/termfiles
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
@@ -115,7 +115,7 @@
 - name: Download Plugins
   ansible.builtin.git: 
     repo: "{{ item }}"
-    dest: /home/{{ user }}/termfiles
+    dest: /User/{{ user }}/termfiles
   with_items:
     - https://github.com/romkatv/powerlevel10k.git 
     - https://github.com/zsh-users/zsh-autosuggestions.git
@@ -135,31 +135,31 @@
 # plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 - name: Set ZSH file variables
   ansible.builtin.lineinfile:
-    path:       /home/{{ user }}/.zshrc
+    path:       /User/{{ user }}/.zshrc
     regexp:     '^ZSH_THEME='
     line:       'ZSH_THEME="powerlevel10k/powerlevel10k"'
 
 - name: Set ZSH file variables
   ansible.builtin.lineinfile:
-    path:       /home/{{ user }}/.zshrc
+    path:       /User/{{ user }}/.zshrc
     regexp:     '^POWERLEVEL9K_MODE='
     line:       'POWERLEVEL9K_MODE="nerdfont-complete"'
 
 - name: Set ZSH file variables
   ansible.builtin.lineinfile:
-    path:       /home/{{ user }}/.zshrc
+    path:       /User/{{ user }}/.zshrc
     regexp:     '^ENABLE_CORRECTION='
     line:       'ENABLE_CORRECTION="true"'
 
 - name: Set ZSH file variables
   ansible.builtin.lineinfile:
-    path:       /home/{{ user }}/.zshrc
+    path:       /User/{{ user }}/.zshrc
     regexp:     '^plugins='
     line:       'plugins=(git zsh-autosuggestions zsh-syntax-highlighting)'
 
 - name: Setup bash profile and exports
   blockinfile:
-    path: /home/{{ user }}/.zshrc
+    path: /User/{{ user }}/.zshrc
     block: |
       alias ll="ls -l"
       export PATH=/Users/$USER/Library/Python/3.8/bin/:$PATH
