@@ -102,6 +102,12 @@
   when:
     - not ohmyzsh_check.stat.exists
 
+- name: add brew ZSH shell to file so we can change to it.
+  ansible.builtin.lineinfile:
+    path:       /etc/shells
+    line:       '/usr/local/bin/zsh'
+    status:     present
+
 - name: Make zsh standard shell
   ansible.builtin.shell: "{{ item }}"
   with_items:
