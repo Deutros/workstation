@@ -115,7 +115,7 @@
 - name: Download Plugins
   ansible.builtin.git: 
     repo: "{{ item }}"
-    dest: /home/{{ USER }}/
+    dest: /home/{{ USER }}/termfiles
   with_items:
     - https://github.com/romkatv/powerlevel10k.git 
     - https://github.com/zsh-users/zsh-autosuggestions.git
@@ -159,7 +159,7 @@
 
 - name: Setup bash profile and exports
   blockinfile:
-    path: ~/.bash_profile
+    path: /home/{{ USER }}/.zshrc
     block: |
       alias ll="ls -l"
       export PATH=/Users/$USER/Library/Python/3.8/bin/:$PATH
