@@ -121,7 +121,7 @@
 
 - name: Creates zsh plugin dir
   file:
-    path: '/Users/{{ user }}/zshplugins
+    path: '/Users/{{ user }}/zshplugins'
     state: directory
 
 # git clone https://github.com/romkatv/powerlevel10k.git 
