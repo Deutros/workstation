@@ -106,7 +106,6 @@
   ansible.builtin.lineinfile:
     path:       /etc/shells
     line:       '/usr/local/bin/zsh'
-    status:     present
 
 - name: Make zsh standard shell
   ansible.builtin.shell: "{{ item }}"
