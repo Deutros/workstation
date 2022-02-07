@@ -114,8 +114,8 @@
 # $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 - name: Download Plugins
   ansible.builtin.git: 
-  repo: "{{ item }}"
-  dest: /home/{{ USER }}/
+    repo: "{{ item }}"
+    dest: /home/{{ USER }}/
   with_items:
     - https://github.com/romkatv/powerlevel10k.git 
     - https://github.com/zsh-users/zsh-autosuggestions.git
