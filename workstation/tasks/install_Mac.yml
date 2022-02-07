@@ -57,6 +57,14 @@
   until: result is successful
   when: homebrew_check.stat.exists
 
+- name: Creates directory for files
+  file:
+    path: /home/{{ USER }}/termfiles
+    state: directory
+    owner: "{{ USER }}"
+    group: "{{ USER }}"
+    mode: 0775
+
 # From https://github.com/OJFord/loginitems
 - name: Install loginitems
   ansible.builtin.shell: "{{ item }}"
