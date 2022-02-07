@@ -98,24 +98,56 @@
     - wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete.otf -P ~/Downloads/
     - mv ~/Downloads/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf  ~/Library/Fonts/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf 
 
-- name: Download Plugins
-  ansible.builtin.shell: "{{ item }}"
-  with_items:
-    - 
-    - 
-
 # git clone https://github.com/romkatv/powerlevel10k.git 
 # $ZSH_CUSTOM/themes/powerlevel10k
 # git clone https://github.com/zsh-users/zsh-autosuggestions.git 
 # $ZSH_CUSTOM/plugins/zsh-autosuggestions
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git 
 # $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+- name: Download Plugins
+  ansible.builtin.git: 
+  repo: "{{ item }}"
+  dest: /home/{{ USER }}/
+  with_items:
+    - https://github.com/romkatv/powerlevel10k.git 
+    - https://github.com/zsh-users/zsh-autosuggestions.git
+    - https://github.com/zsh-users/zsh-syntax-highlighting.git
+
+- name: Set Variables for terminal
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
+    - $ZSH_CUSTOM/themes/powerlevel10k
+    - $ZSH_CUSTOM/plugins/zsh-autosuggestions
+    - $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 
 # .zshrc
 # ZSH_THEME="powerlevel10k/powerlevel10k"
 # POWERLEVEL9K_MODE="nerdfont-complete"
 # ENABLE_CORRECTION="true"
 # plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+- name: Set ZSH file variables
+  ansible.builtin.lineinfile:
+    path:       /home/{{ USER }}/.zshrc
+    regexp:     '^ZSH_THEME='
+    line:       'ZSH_THEME="powerlevel10k/powerlevel10k"'
+
+- name: Set ZSH file variables
+  ansible.builtin.lineinfile:
+    path:       /home/{{ USER }}/.zshrc
+    regexp:     '^POWERLEVEL9K_MODE='
+    line:       'POWERLEVEL9K_MODE="nerdfont-complete"'
+
+- name: Set ZSH file variables
+  ansible.builtin.lineinfile:
+    path:       /home/{{ USER }}/.zshrc
+    regexp:     '^ENABLE_CORRECTION='
+    line:       'ENABLE_CORRECTION="true"'
+
+- name: Set ZSH file variables
+  ansible.builtin.lineinfile:
+    path:       /home/{{ USER }}/.zshrc
+    regexp:     '^plugins='
+    line:       'plugins=(git zsh-autosuggestions zsh-syntax-highlighting)'
 
 - name: Setup bash profile and exports
   blockinfile:
