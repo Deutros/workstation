@@ -1,128 +1,126 @@
 ---
+#TODO 
+# Fix Font Setup!
+# See if i can preconfigure some applications
+# Give a usefull output
 # This will install all applications and settings for Mac
 
-# - name: Ensuring Homebrew Is Installed
-#   stat:
-#     path: /usr/local/bin/brew
-#   register: homebrew_check
+- name: Ensuring Homebrew Is Installed
+  stat:
+    path: /usr/local/bin/brew
+  register: homebrew_check
 
-# - name: Fail If Homebrew Is Not Installed and install_homebrew_if_missing Is False
-#   fail:
-#     msg: Homebrew is missing...Install from http://brew.sh/
-#   when:
-#     - not homebrew_check.stat.exists
-#     - not install_homebrew_if_missing
+- name: Fail If Homebrew Is Not Installed and install_homebrew_if_missing Is False
+  fail:
+    msg: Homebrew is missing...Install from http://brew.sh/
+  when:
+    - not homebrew_check.stat.exists
+    - not install_homebrew_if_missing
 
-# - name: Installing Homebrew
-#   shell: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-#   when:
-#     - not homebrew_check.stat.exists
-#     - install_homebrew_if_missing
+- name: Installing Homebrew
+  shell: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  when:
+    - not homebrew_check.stat.exists
+    - install_homebrew_if_missing
 
-# - name: Install formula with 'brew' from cask
-#   community.general.homebrew_cask:
-#     name: "{{ item }}"
-#     state: present
-#     update_homebrew: yes
-#   with_items:
-#     - homebrew/cask/authy
-#     - homebrew/cask/google-chrome
-#     - homebrew/cask/firefox
-#     - homebrew/cask/nordvpn
-#     - homebrew/cask/nordpass
-#     - homebrew/cask/tunnelblick
-#     - homebrew/cask/visual-studio-code
-#     - homebrew/cask/sublime-text
-#     - homebrew/cask/libreoffice
-#     - homebrew/cask/spotify
-#     - homebrew/cask/discord
-#     - homebrew/cask/microsoft-teams
-#     - homebrew/cask/iterm2
-#   register: result
-#   until: result is successful
-#   when: homebrew_check.stat.exists
+- name: Install formula with 'brew' from cask
+  community.general.homebrew_cask:
+    name: "{{ item }}"
+    state: present
+    update_homebrew: yes
+  with_items:
+    - homebrew/cask/authy
+    - homebrew/cask/google-chrome
+    - homebrew/cask/firefox
+    - homebrew/cask/nordvpn
+    - homebrew/cask/nordpass
+    - homebrew/cask/tunnelblick
+    - homebrew/cask/visual-studio-code
+    - homebrew/cask/sublime-text
+    - homebrew/cask/libreoffice
+    - homebrew/cask/spotify
+    - homebrew/cask/discord
+    - homebrew/cask/microsoft-teams
+  register: result
+  until: result is successful
+  when: homebrew_check.stat.exists
 
-# - name: Install formula with 'brew' no casks
-#   community.general.homebrew:
-#     name: "{{ item }}"
-#     state: present
-#     update_homebrew: yes
-#   with_items:
-#     - go
-#     - zsh
-#     - terraform
-#     - wget
-#     - nmap
-#   register: result
-#   until: result is successful
-#   when: homebrew_check.stat.exists
+- name: Install formula with 'brew' no casks
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+    update_homebrew: yes
+  with_items:
+    - go
+    - zsh
+    - terraform
+    - wget
+    - nmap
+  register: result
+  until: result is successful
+  when: homebrew_check.stat.exists
 
-# # From https://github.com/OJFord/loginitems
-# - name: Install loginitems
-#   ansible.builtin.shell: "{{ item }}"
-#   with_items:
-#     - wget https://github.com/OJFord/loginitems/archive/refs/heads/master.zip -P ~/Downloads/
-#     - unzip -o ~/Downloads/master.zip -d ~/Downloads/loginitems
-#     - chmod +x ~/Downloads/loginitems/loginitems-master/*
-#     - mv ~/Downloads/loginitems/loginitems-master/loginitems* /usr/local/bin/.
+# From https://github.com/OJFord/loginitems
+- name: Install loginitems
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
+    - wget https://github.com/OJFord/loginitems/archive/refs/heads/master.zip -P ~/Downloads/
+    - unzip -o ~/Downloads/master.zip -d ~/Downloads/loginitems
+    - chmod +x ~/Downloads/loginitems/loginitems-master/*
+    - mv ~/Downloads/loginitems/loginitems-master/loginitems* /usr/local/bin/.
 
-# - name: Checking if Stack is Installed
-#   stat:
-#     path: /Applications/stack.app
-#   register: stack_check
+- name: Checking if Stack is Installed
+  stat:
+    path: /Applications/stack.app
+  register: stack_check
 
-# - name: Install Stack
-#   ansible.builtin.shell: "{{ item }}"
-#   with_items:
-#     - wget https://mirror.transip.net/stack/software/stack-macos-latest.dmg -P ~/Downloads/
-#     - hdiutil attach ~/Downloads/stack-macos-latest.dmg -nobrowse -mountpoint ~/stack
-#     - cp -afR ~/stack/*.app /Applications/stack.app
-#     - hdiutil detach ~/stack
-#   when:
-#     - not stack_check.stat.exists
+- name: Install Stack
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
+    - wget https://mirror.transip.net/stack/software/stack-macos-latest.dmg -P ~/Downloads/
+    - hdiutil attach ~/Downloads/stack-macos-latest.dmg -nobrowse -mountpoint ~/stack
+    - cp -afR ~/stack/*.app /Applications/stack.app
+    - hdiutil detach ~/stack
+  when:
+    - not stack_check.stat.exists
 
-# - name: Startup Stack
-#   ansible.builtin.shell: "{{ item }}"
-#   with_items:
-#     - loginitems -a stack
+- name: Startup Stack
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
+    - loginitems -a stack
 
-# - name: Checking if oh my zsh is Installed
-#   stat:
-#     path: /Users/{{ user }}/.oh-my-zsh/oh-my-zsh.sh
-#   register: ohmyzsh_check
+- name: Checking if oh my zsh is Installed
+  stat:
+    path: /Users/{{ user }}/.oh-my-zsh/oh-my-zsh.sh
+  register: ohmyzsh_check
 
-# - name: print ohmyzsh var
-#   ansible.builtin.debug:
-#     msg: "{{ ohmyzsh_check }}"
+- name: print ohmyzsh var
+  ansible.builtin.debug:
+    msg: "{{ ohmyzsh_check }}"
 
-# - name: Install Oh My ZSH
-#   ansible.builtin.shell: "{{ item }}"
-#   with_items:
-#     - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-#   when:
-#     - not ohmyzsh_check.stat.exists
+- name: Install Oh My ZSH
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
+    - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  when:
+    - not ohmyzsh_check.stat.exists
 
-# - name: add brew ZSH shell to file so we can change to it.
-#   ansible.builtin.lineinfile:
-#     path:       /etc/shells
-#     line:       '/usr/local/bin/zsh'
-#   become:       true
+- name: add brew ZSH shell to file so we can change to it.
+  ansible.builtin.lineinfile:
+    path:       /etc/shells
+    line:       '/usr/local/bin/zsh'
+  become:       true
 
-# - name: Make zsh standard shell
-#   ansible.builtin.shell: "{{ item }}"
-#   with_items:
-#     - chsh -s /usr/local/bin/zsh
+- name: Make zsh standard shell
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
+    - chsh -s /usr/local/bin/zsh
 
-# - name: Get Fura Mono Regular Nerd Font
-#   ansible.builtin.shell: "{{ item }}"
-#   with_items:
-#     - wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete.otf -P ~/Downloads/
-#     - mv ~/Downloads/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf  ~/Library/Fonts/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf 
-
-- name: Creates zsh plugin dir
-  file:
-    path: '/Users/{{ user }}/zshplugins'
-    state: directory
+ - name: Get Fura Mono Regular Nerd Font
+   ansible.builtin.shell: "{{ item }}"
+   with_items:
+     - wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete.otf -P ~/Downloads/
+     #- mv ~/Downloads/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf  ~/Library/Fonts/Fura\ Mono\ Regular\ Nerd\ Font\ Complete.otf 
 
 # git clone https://github.com/romkatv/powerlevel10k.git 
 # $ZSH_CUSTOM/themes/powerlevel10k
@@ -134,18 +132,10 @@
   ansible.builtin.git: 
     repo: "{{ item.git }}"
     dest: "{{ item.dir }}"
-    separate_git_dir: /src/ansible-examples.git
   with_items:
-    - { git: https://github.com/romkatv/powerlevel10k.git,              dir: '/Users/{{ user }}/zshplugins' }
-    - { git: https://github.com/zsh-users/zsh-autosuggestions.git,      dir: '/Users/{{ user }}/zshplugins' }
-    - { git: https://github.com/zsh-users/zsh-syntax-highlighting.git,  dir: '/Users/{{ user }}/zshplugins' }
-
-- name: Set Variables for terminal
-  ansible.builtin.shell: "{{ item }}"
-  with_items:
-    - $ZSH_CUSTOM/themes/powerlevel10k
-    - $ZSH_CUSTOM/plugins/zsh-autosuggestions
-    - $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+    - { git: https://github.com/romkatv/powerlevel10k.git,              dir: '/Users/{{ user }}/.ohmythemes/powerlevel10k' }
+    - { git: https://github.com/zsh-users/zsh-autosuggestions.git,      dir: '$ZSH_CUSTOM/plugins/zsh-autosuggestions' }
+    - { git: https://github.com/zsh-users/zsh-syntax-highlighting.git,  dir: '$ZSH_CUSTOM/plugins/zsh-syntax-highlighting' }
 
 # .zshrc
 # ZSH_THEME="powerlevel10k/powerlevel10k"
